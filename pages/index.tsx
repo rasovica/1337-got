@@ -1,11 +1,12 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import {DataContext} from "../utils/dataProvider";
 
-export default class extends React.Component {
-    render() {
-        return (
-            <div>
-                Hello Next.js
-            </div>
-        )
-    }
+export default () => {
+    const data = useContext(DataContext);
+
+    return (
+        <div>
+            { data.characters.map(item => <div key={item.name}>{item.name}</div>) }
+        </div>
+    )
 }

@@ -1,5 +1,6 @@
 import App, {Container} from 'next/app'
 import React from 'react'
+import {DataProvider} from "../utils/dataProvider";
 
 export default class MyApp extends App {
     static async getInitialProps ({ Component, ctx }) {
@@ -15,7 +16,9 @@ export default class MyApp extends App {
     render () {
         const {Component, pageProps} = this.props;
         return <Container>
-            <Component {...pageProps} />
+            <DataProvider>
+                <Component {...pageProps} />
+            </DataProvider>
         </Container>
     }
 }
