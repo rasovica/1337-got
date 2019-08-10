@@ -2,8 +2,9 @@ import React, {useMemo, useState} from "react";
 import {Characters} from "../models/characters";
 
 const emptyState = {
-    loadCharacters: null,
+    loadMoreCharacters: null,
     characters: [],
+    charactersPaginator: null,
     episodes: [],
 };
 const DataContext = React.createContext(emptyState);
@@ -13,12 +14,12 @@ const DataProvider = ({ children }) => {
     useMemo(() => {
         const characters = new Characters();
         characters.load().then(() => {
-            const paginator = characters.paginator();
+            const charactersPaginator = characters.paginator();
 
             setData({
                 ...emptyState,
-                loadCharacters: paginator,
-                characters: [...data.characters, ...paginator.next().data]
+                characters: [...data.characters, ...charactersPaginator.next().data],
+                charactersPaginator,
             })
         });
     }, []);

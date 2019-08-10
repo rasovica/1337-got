@@ -1,6 +1,13 @@
 import App, {Container} from 'next/app'
 import React from 'react'
 import {DataProvider} from "../utils/dataProvider";
+import {createGlobalStyle} from "styled-components";
+
+const GlobalStyle = createGlobalStyle`
+    body {
+        background-color: #000;
+    }
+`;
 
 export default class MyApp extends App {
     static async getInitialProps ({ Component, ctx }) {
@@ -19,6 +26,7 @@ export default class MyApp extends App {
             <DataProvider>
                 <Component {...pageProps} />
             </DataProvider>
+            <GlobalStyle/>
         </Container>
     }
 }

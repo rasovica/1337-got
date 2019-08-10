@@ -1,22 +1,34 @@
-import Document, { Head, Main, NextScript } from 'next/document'
-import * as React from "react";
+import Document, { Head, Main, NextScript } from 'next/document';
+import { ServerStyleSheet } from 'styled-components';
+import React from "react";
 
-export default class MyDocument extends Document {
+type MyDocumentProps = {
+    styleTags: React.ReactChildren
+}
+
+export default class MyDocument extends Document<MyDocumentProps> {
     static async getInitialProps(ctx) {
         const initialProps = await Document.getInitialProps(ctx);
+        const sheet = new ServerStyleSheet();
 
-        return { ...initialProps };
+        ctx.renderPage((App) => (props) =>
+            sheet.collectStyles(<App {...props} />),
+        );
+
+        const styleTags = sheet.getStyleElement();
+
+        return { ...initialProps, styleTags };
     }
 
     render() {
         return (
             <html>
-            <Head>
-                <style>{`body { margin: 0 } /* custom! */`}</style>
-            </Head>
-            <body className="custom_class">
-            <Main />
-            <NextScript />
+                <Head>
+                    {this.props.styleTags}
+                </Head>
+            <body>
+                <Main />
+                <NextScript />
             </body>
             </html>
         )
