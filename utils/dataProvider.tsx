@@ -1,31 +1,39 @@
-import React, {useMemo, useState} from "react";
+import React, {useCallback, useMemo, useState} from "react";
 import {Characters} from "../models/characters";
 
 const emptyState = {
     loadMoreCharacters: null,
-    characters: [],
     charactersPaginator: null,
-    episodes: [],
+    characters: [],
 };
 const DataContext = React.createContext(emptyState);
 
 const DataProvider = ({ children }) => {
-    const [data, setData] = useState(emptyState);
-    useMemo(() => {
-        const characters = new Characters();
-        characters.load().then(() => {
-            const charactersPaginator = characters.paginator();
+    const [characters, setCharacters] = useState([]);
+    const [charactersPaginator, setCharactersPaginator] = useState(null);
 
-            setData({
-                ...emptyState,
-                characters: [...data.characters, ...charactersPaginator.next().data],
-                charactersPaginator,
-            })
-        });
+    const loadMoreCharacters = useCallback(() => {
+        setCharacters([...characters, ...charactersPaginator.next().data])
+    }, [characters, charactersPaginator]);
+
+    useMemo(() => {
+        const charactersObject = new Characters();
+
+        charactersObject.load()
+            .then(() => {
+               const charactersObjectPaginator = charactersObject.paginator();
+
+               setCharacters(charactersObjectPaginator.next().data);
+               setCharactersPaginator(charactersObjectPaginator);
+            });
     }, []);
 
     return (
-        <DataContext.Provider value={data}>
+        <DataContext.Provider value={{
+            characters,
+            loadMoreCharacters,
+            charactersPaginator,
+        }}>
             { children }
         </DataContext.Provider>
     )

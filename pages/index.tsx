@@ -25,10 +25,11 @@ export default () => {
     const data = useContext(DataContext);
     const scrollHandler = (event) => {
         if (event.target.scrollTop + event.target.clientHeight + 100 >= event.target.scrollHeight) {
-            console.log(data.loadMoreCharacters);
             data.loadMoreCharacters();
         }
     };
+
+    console.log(data.characters);
 
     return (
         <StyledIndex onScroll={(e) => scrollHandler(e)}>
