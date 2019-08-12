@@ -1,8 +1,9 @@
 export interface CharacterStub {
     name: string;
     image: string;
-    religion: string;
     siblings: string[];
+    house?: string;
+    alive: boolean;
 }
 
 export type AllCharactersResponse = CharacterStub[];

@@ -4,8 +4,10 @@ import {DataProvider} from "../utils/dataProvider";
 import {createGlobalStyle} from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
+    @import url('https://fonts.googleapis.com/css?family=Raleway:300&display=swap');
+    
     body {
-        background-color: #000;
+        background-color: #4a90e4;
     }
 `;
 

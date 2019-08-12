@@ -1,13 +1,15 @@
 import fetch from 'isomorphic-unfetch';
+
 import {AllCharactersResponse} from "../interfaces/allCharactersResponse";
 import {Character} from "./character";
+import {BASE_URL} from "../constants";
 
 
 export class Characters {
     private allCharacters: Character[] = [];
 
     public async load(): Promise<void> {
-        const data: AllCharactersResponse = await fetch('https://api.got.show/api/book/characters')
+        const data: AllCharactersResponse = await fetch(BASE_URL)
                         .then(response => {
                             return response.json()
                         });
