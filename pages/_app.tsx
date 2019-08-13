@@ -4,10 +4,20 @@ import {DataProvider} from "../utils/dataProvider";
 import {createGlobalStyle} from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
-    @import url('https://fonts.googleapis.com/css?family=Raleway:300&display=swap');
+    @import url('https://fonts.googleapis.com/css?family=Raleway:300&display=optional');
+    
+    :root {
+      --green: #4fe4c1;
+      --red: #f97242;
+      --blue: #4a90e4;
+      --shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    }
     
     body {
-        background-color: #4a90e4;
+        background-color: var(--blue);
+
+        font-family: 'Raleway', sans-serif;
+        font-weight: 300;
     }
 `;
 

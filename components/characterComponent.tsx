@@ -13,8 +13,8 @@ const CharacterCard = styled.div<CharacterProps>`
     min-width: 500px;
     height: 400px;
 
-    background-color: ${props => props.character.alive ? '#4fe4c1' :  '#f97242'};
-    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);    
+    background-color: ${props => props.character.alive ? 'var(--green)' :  'var(--red)'};
+    box-shadow: var(--shadow);    
 
     .image {
       position: absolute;
@@ -44,9 +44,6 @@ const CharacterCard = styled.div<CharacterProps>`
 
       background-color: white;
       box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-      
-      font-family: 'Raleway', sans-serif;
-      font-weight: 300;
       
       .name {
         margin-bottom: 10px;

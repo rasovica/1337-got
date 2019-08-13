@@ -2,6 +2,8 @@ import React, {useContext} from 'react';
 import {DataContext} from "../utils/dataProvider";
 import {CharacterComponent} from "../components/characterComponent";
 import styled from "styled-components";
+import {LoadingComponent} from "../components/loadingComponent";
+import {ErrorComponent} from "../components/errorComponent";
 
 const StyledIndex = styled.div`
   height: 100vh;
@@ -29,7 +31,8 @@ export default () => {
 
     return (
         <StyledIndex onScroll={(e) => scrollHandler(e)}>
-            { data.characters.length === 0 && <div>Loading data...</div>}
+            { data.error && <ErrorComponent error={data.error}/>}
+            { !data.error && data.characters.length === 0 && <LoadingComponent/>}
             { data.characters.map(character => <CharacterComponent character={character} key={character.name}/>) }
         </StyledIndex>
     )

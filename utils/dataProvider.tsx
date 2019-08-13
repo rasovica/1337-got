@@ -4,6 +4,7 @@ import {Characters} from "../models/characters";
 const emptyState = {
     loadMoreCharacters: null,
     charactersPaginator: null,
+    error: null,
     characters: [],
 };
 const DataContext = React.createContext(emptyState);
@@ -11,6 +12,7 @@ const DataContext = React.createContext(emptyState);
 const DataProvider = ({ children }) => {
     const [characters, setCharacters] = useState([]);
     const [charactersPaginator, setCharactersPaginator] = useState(null);
+    const [error, setError] = useState(null);
 
     const loadMoreCharacters = useCallback(() => {
         setCharacters([...characters, ...charactersPaginator.next().data])
@@ -25,12 +27,14 @@ const DataProvider = ({ children }) => {
 
                setCharacters(charactersObjectPaginator.next().data);
                setCharactersPaginator(charactersObjectPaginator);
-            });
+            })
+            .catch(setError);
     }, []);
 
     return (
         <DataContext.Provider value={{
             characters,
+            error,
             loadMoreCharacters,
             charactersPaginator,
         }}>
