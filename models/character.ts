@@ -9,11 +9,11 @@ export class Character {
     siblings: Character[] = [];
     siblingsNames: string[];
 
-    constructor({name, image, house, children, spouse, alive}: CharacterStub) {
+    constructor({name, image, house, siblings, alive}: CharacterStub) {
         this.name = name;
         this.image = image;
         this.house = house;
-        this.siblingsNames = [...children, ...spouse];
+        this.siblingsNames = siblings;
         this.alive = alive;
     }
 

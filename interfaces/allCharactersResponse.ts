@@ -1,8 +1,7 @@
 export interface CharacterStub {
     name: string;
     image: string;
-    spouse: string[];
-    children: string[];
+    siblings: string[];
     house?: string;
     alive: boolean;
 }

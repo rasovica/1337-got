@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import {Character} from "../models/character";
+import {CharacterLink} from "../pages/character/[name]";
 
 type CharacterProps = {
     character: Character
@@ -10,7 +11,8 @@ type CharacterProps = {
 const CharacterCard = styled.div<CharacterProps>`
     position: relative;
 
-    min-width: 500px;
+    min-width: 300px;
+    width: 70%;
     height: 400px;
 
     background-color: ${props => props.character.alive ? 'var(--green)' :  'var(--red)'};
@@ -63,10 +65,18 @@ const CharacterCard = styled.div<CharacterProps>`
         font-size: 18px;
       }    
     }
+    
+    .siblings {
+      position: absolute;
+      
+      top: 50%;
+      left: 35%;
+      width: 65%;
+      max-height: 50%;
+    }
 `;
 
 export const CharacterComponent: React.FunctionComponent<CharacterProps> = ({character}) => {
-    console.log(character);
 
     return (
         <CharacterCard character={character}>
@@ -75,6 +85,14 @@ export const CharacterComponent: React.FunctionComponent<CharacterProps> = ({cha
                 <h3 className="name">{ character.name}</h3>
                 { character.house && <span className="house">{character.house}</span> }
             </div>
+            { character.siblings.length > 0 &&
+                <div className={"siblings"}>
+                    <h3>Siblings:</h3>
+                    <ul>
+                        { character.siblings.map(sibling => <CharacterLink key={sibling.name} name={sibling.name}/>)}
+                    </ul>
+                </div>
+            }
         </CharacterCard>
     )
 };

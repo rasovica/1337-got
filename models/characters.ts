@@ -2,7 +2,7 @@ import fetch from 'isomorphic-unfetch';
 
 import {AllCharactersResponse} from "../interfaces/allCharactersResponse";
 import {Character} from "./character";
-import {BASE_URL} from "../constants";
+import {BASE_URL, ENDPOINT_ENUM} from "../constants";
 
 type CharacterLookup = {
     [name: string]: Character | undefined;
@@ -13,7 +13,7 @@ export class Characters {
     private characterLookup: CharacterLookup = {};
 
     public async load(): Promise<void> {
-        const data: AllCharactersResponse = await fetch(BASE_URL)
+        const data: AllCharactersResponse = await fetch(BASE_URL + ENDPOINT_ENUM.characters)
                         .then(response => {
                             return response.json()
                         });
@@ -51,10 +51,13 @@ export class Characters {
             }
 
             this.characterLookup[character.name] = character;
+
             character.siblingsNames.forEach((siblingName) => {
                 if (this.characterLookup[siblingName]) {
                     this.characterLookup[siblingName].addSibling(character);
                     character.addSibling(this.characterLookup[siblingName]);
+                } else {
+                    console.log('UF');
                 }
             });
         });
