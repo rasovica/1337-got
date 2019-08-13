@@ -16,6 +16,7 @@ const StyledWrapper = styled.div`
 `;
 
 export const ErrorComponent = ({error}: ErrorComponentProps) => {
+    console.error(error);
 
     return <StyledWrapper>Error! {error.message}</StyledWrapper>
 };

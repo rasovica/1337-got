@@ -30,7 +30,7 @@ const CharacterCard = styled.div<CharacterProps>`
       background-repeat: no-repeat;
       background-size: cover;
       background-position: center;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);    
+      box-shadow: var(--shadow);    
     }
     
     .card {
@@ -43,7 +43,13 @@ const CharacterCard = styled.div<CharacterProps>`
       z-index: 1;
 
       background-color: white;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+      box-shadow: var(--shadow);
+      
+      &.no-img {
+        left: 10%;
+        width: 80%;
+        transform: translateX(-10px);
+      }
       
       .name {
         margin-bottom: 10px;
@@ -65,7 +71,7 @@ export const CharacterComponent: React.FunctionComponent<CharacterProps> = ({cha
     return (
         <CharacterCard character={character}>
             { character.image && <div className="image" style={{backgroundImage: `url(${character.image}`}}/> }
-            <div className="card">
+            <div className={character.image ? 'card' : 'card no-img'}>
                 <h3 className="name">{ character.name}</h3>
                 { character.house && <span className="house">{character.house}</span> }
             </div>
