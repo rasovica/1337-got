@@ -41,7 +41,7 @@ export default () => {
     const [character, setCharacter] = useState(null);
     const router = useRouter();
     const data = useContext(DataContext);
-    const name = router.query.name.toString();
+    const name = router.query.name as string;
 
     useEffect(() => {
         if (data.charactersObject) {
