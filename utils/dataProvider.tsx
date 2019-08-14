@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {Characters} from "../models/characters";
 
 const emptyState = {
@@ -6,21 +6,21 @@ const emptyState = {
     charactersPaginator: null,
     error: null,
     characters: [],
-    getCharacter: null,
+    charactersObject: null,
 };
 const DataContext = React.createContext(emptyState);
 
 const DataProvider = ({ children }) => {
     const [characters, setCharacters] = useState([]);
     const [charactersPaginator, setCharactersPaginator] = useState(null);
-    const [getCharacter, setGetCharacter] = useState(null);
+    const [charactersObject, setCharactersObject] = useState(null);
     const [error, setError] = useState(null);
 
     const loadMoreCharacters = useCallback(() => {
         setCharacters([...characters, ...charactersPaginator.next().data])
     }, [characters, charactersPaginator]);
 
-    useMemo(() => {
+    useEffect(() => {
         const charactersObject = new Characters();
 
         charactersObject.load()
@@ -29,7 +29,7 @@ const DataProvider = ({ children }) => {
 
                setCharacters(charactersObjectPaginator.next().data);
                setCharactersPaginator(charactersObjectPaginator);
-               setGetCharacter(charactersObject.getCharacter);
+               setCharactersObject(charactersObject);
             })
             .catch(setError);
     }, []);
@@ -40,9 +40,11 @@ const DataProvider = ({ children }) => {
             error,
             loadMoreCharacters,
             charactersPaginator,
-            getCharacter,
+            charactersObject,
         }}>
-            { children }
+            <div>
+                { children }
+            </div>
         </DataContext.Provider>
     )
 };

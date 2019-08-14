@@ -1,4 +1,6 @@
 import {CharacterStub} from "../interfaces/allCharactersResponse";
+import fetch from "isomorphic-unfetch";
+import {BASE_URL, ENDPOINT_ENUM} from "../constants";
 
 
 export class Character {
@@ -24,6 +26,14 @@ export class Character {
     public static reduce(chr: CharacterStub) {
         return new Character(chr);
     }
+
+    public static async getByName(name: string) {
+        const data: CharacterStub = await fetch(BASE_URL + ENDPOINT_ENUM.character + name)
+            .then(response => {
+                return response.json()
+            });
+        return this.reduce(data);
+    };
 
     public addSibling(chr: Character) {
         if (this.siblingsNames.includes(chr.name) && !this.isSibling(chr)) {

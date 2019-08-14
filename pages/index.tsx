@@ -23,6 +23,7 @@ const StyledIndex = styled.div`
 
 export default () => {
     const data = useContext(DataContext);
+
     const scrollHandler = (event) => {
         if (event.target.scrollTop + event.target.clientHeight + 100 >= event.target.scrollHeight) {
             data.loadMoreCharacters();

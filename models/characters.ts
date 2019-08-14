@@ -13,7 +13,7 @@ export class Characters {
     private characterLookup: CharacterLookup = {};
 
     public async load(): Promise<void> {
-        const data: AllCharactersResponse = await fetch(BASE_URL + ENDPOINT_ENUM.characters)
+        const data: AllCharactersResponse = await fetch(BASE_URL + ENDPOINT_ENUM.allCharacters)
                         .then(response => {
                             return response.json()
                         });
