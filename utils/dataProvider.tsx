@@ -6,12 +6,14 @@ const emptyState = {
     charactersPaginator: null,
     error: null,
     characters: [],
+    getCharacter: null,
 };
 const DataContext = React.createContext(emptyState);
 
 const DataProvider = ({ children }) => {
     const [characters, setCharacters] = useState([]);
     const [charactersPaginator, setCharactersPaginator] = useState(null);
+    const [getCharacter, setGetCharacter] = useState(null);
     const [error, setError] = useState(null);
 
     const loadMoreCharacters = useCallback(() => {
@@ -27,6 +29,7 @@ const DataProvider = ({ children }) => {
 
                setCharacters(charactersObjectPaginator.next().data);
                setCharactersPaginator(charactersObjectPaginator);
+               setGetCharacter(charactersObject.getCharacter);
             })
             .catch(setError);
     }, []);
@@ -37,6 +40,7 @@ const DataProvider = ({ children }) => {
             error,
             loadMoreCharacters,
             charactersPaginator,
+            getCharacter,
         }}>
             { children }
         </DataContext.Provider>

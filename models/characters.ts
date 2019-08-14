@@ -43,6 +43,10 @@ export class Characters {
         };
     }
 
+    public getCharacter = (name: string): Character | undefined => {
+        return this.characterLookup[name];
+    };
+
     private createSiblings() {
         this.allCharacters.forEach((character: Character) => {
             if (this.characterLookup[character.name]) {
@@ -56,8 +60,6 @@ export class Characters {
                 if (this.characterLookup[siblingName]) {
                     this.characterLookup[siblingName].addSibling(character);
                     character.addSibling(this.characterLookup[siblingName]);
-                } else {
-                    console.log('UF');
                 }
             });
         });

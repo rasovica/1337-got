@@ -1,7 +1,9 @@
 import { useRouter } from 'next/router';
-import React from "react";
+import React, {useContext} from "react";
 import Link from "next/link";
 import styled from "styled-components";
+import {DataContext} from "../../utils/dataProvider";
+import {Character} from "../../models/character";
 
 const StyledLi = styled.li`
   a {
@@ -21,9 +23,13 @@ export const CharacterLink = ({name}) => {
 };
 
 export default () => {
+    const context = useContext(DataContext);
     const router = useRouter();
+    const name = router.query.name;
+    console.log(context);
+    const character: Character | null = context.getCharacter(name);
 
     return (
-        <div>{router.query.name}</div>
+        <div>{character.name}</div>
     );
 }

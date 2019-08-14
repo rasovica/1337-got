@@ -8,13 +8,17 @@ export class Character {
     alive: boolean;
     siblings: Character[] = [];
     siblingsNames: string[];
+    culture: string[];
+    religion: string[];
 
-    constructor({name, image, house, siblings, alive}: CharacterStub) {
+    constructor({name, image, house, siblings, alive, culture, religion}: CharacterStub) {
         this.name = name;
         this.image = image;
         this.house = house;
         this.siblingsNames = siblings;
         this.alive = alive;
+        this.culture = culture;
+        this.religion = religion;
     }
 
     public static reduce(chr: CharacterStub) {

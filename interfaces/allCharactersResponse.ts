@@ -4,6 +4,8 @@ export interface CharacterStub {
     siblings: string[];
     house?: string;
     alive: boolean;
+    culture: string[];
+    religion: string[];
 }
 
 export type AllCharactersResponse = CharacterStub[];
