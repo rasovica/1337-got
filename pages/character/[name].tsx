@@ -4,6 +4,7 @@ import styled from "styled-components";
 import {DataContext} from "../../utils/dataProvider";
 import {useRouter} from "next/router";
 import {Character} from "../../models/character";
+import {ErrorComponent} from "../../components/errorComponent";
 
 const StyledLi = styled.li`
   a {
@@ -39,6 +40,7 @@ const CharacterWrapper = styled.div<CharacterProps>`
 
 export default () => {
     const [character, setCharacter] = useState(null);
+    const [error, setError] = useState(null);
     const router = useRouter();
     const data = useContext(DataContext);
     const name = router.query.name as string;
@@ -47,12 +49,15 @@ export default () => {
         if (data.charactersObject) {
             setCharacter(data.charactersObject.getCharacter(name));
         } else {
-            Character.getByName(name).then(setCharacter);
+            Character.getByName(name).then(setCharacter).catch(setError);
         }
-    }, [data]);
+    }, [data.charactersObject]);
 
     return (
         <CharacterWrapper character={character}>
+            {
+                (error || data.error) && ErrorComponent(error || data.error)
+            }
             {
                 character && <div className="character">
                     { character.name }

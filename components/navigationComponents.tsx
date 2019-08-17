@@ -15,6 +15,9 @@ export const NavigationComponent = () => {
                 <Link href="/">
                     Characters
                 </Link>
+                <Link href="/episodes">
+                    <a>Episodes</a>
+                </Link>
             </StyledWrapper>
         </div>
     )

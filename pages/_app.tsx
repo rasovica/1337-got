@@ -1,6 +1,6 @@
 import App, {Container} from 'next/app';
 import React from 'react';
-import {createGlobalStyle} from "styled-components";
+import styled, {createGlobalStyle} from "styled-components";
 
 import {DataProvider} from "../utils/dataProvider";
 import {NavigationComponent} from "../components/navigationComponents";
@@ -14,9 +14,6 @@ const GlobalStyle = createGlobalStyle`
       --blue: #4a90e4;
       --shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
     }
-    html {
-      overflow: hidden;
-    }
     
     body {
         margin: 0;
@@ -27,6 +24,12 @@ const GlobalStyle = createGlobalStyle`
         font-weight: 300;
     }
 `;
+
+const Wrapper = styled('div')`
+    display: flex;
+    flex-direction: column;
+    max-height: 100vh;
+`
 
 export default class MyApp extends App {
     static async getInitialProps ({ Component, ctx }) {
@@ -43,11 +46,13 @@ export default class MyApp extends App {
         const {Component, pageProps} = this.props;
         return (
             <Container>
-                <NavigationComponent/>
-                <DataProvider>
-                    <Component {...pageProps} />
-                </DataProvider>
                 <GlobalStyle/>
+                <Wrapper>
+                    <NavigationComponent/>
+                    <DataProvider>
+                        <Component {...pageProps} />
+                    </DataProvider>
+                </Wrapper>
             </Container>
         )
     }

@@ -42,9 +42,7 @@ const DataProvider = ({ children }) => {
             charactersPaginator,
             charactersObject,
         }}>
-            <div>
-                { children }
-            </div>
+        { children }
         </DataContext.Provider>
     )
 };
