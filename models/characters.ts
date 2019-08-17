@@ -47,6 +47,12 @@ export class Characters {
         return this.characterLookup[name];
     };
 
+    public getCharacters = (characters: string[]): Character[] => {
+        return characters
+            .map(this.getCharacter)
+            .filter(item => item !== undefined);
+    };
+
     private createSiblings() {
         this.allCharacters.forEach((character: Character) => {
             if (this.characterLookup[character.name]) {

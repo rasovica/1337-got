@@ -1,5 +1,6 @@
-export const BASE_URL = 'https://api.got.show/api/show/';
+export const BASE_URL = 'https://api.got.show/api/';
 export enum ENDPOINT_ENUM {
-    allCharacters  = 'characters',
-    character = 'characters/'
+    allCharacters  = 'show/characters',
+    character = 'show/characters/',
+    allEpisodes = 'map/episodes',
 }
