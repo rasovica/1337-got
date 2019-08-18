@@ -2,7 +2,7 @@ import React, {FunctionComponent} from "react";
 import styled from "styled-components";
 
 import {Character} from "../models/character";
-import {CharacterLink} from "../pages/character/[name]";
+import {CharacterLink} from "./characterLinkComponent";
 
 type CharacterProps = {
     character: Character

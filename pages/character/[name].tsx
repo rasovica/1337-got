@@ -1,14 +1,14 @@
 import React, {useContext, useEffect, useState} from "react";
-import Link from "next/link";
 import styled from "styled-components";
-import {DataContext} from "../../context/dataProvider";
 import {useRouter} from "next/router";
+
+import {DataContext} from "../../context/dataProvider";
 import {Character} from "../../models/character";
 import {ErrorComponent} from "../../components/errorComponent";
 
 type CharacterProps = {
-    character: Character
-}
+    character: Character;
+};
 
 const CharacterWrapper = styled.div<CharacterProps>`
     display: grid;
@@ -46,22 +46,3 @@ export default () => {
         </CharacterWrapper>
     );
 }
-
-const StyledWrapper = styled.div`
-  a {
-    color: inherit;
-    text-decoration: none;
-  }
-`;
-
-export const CharacterLink = ({children, name}) => {
-    return (
-        <StyledWrapper>
-            <Link href="/character/[name]" as={`/character/${name}`}>
-                <a>
-                    {children}
-                </a>
-            </Link>
-        </StyledWrapper>
-    )
-};

@@ -1,23 +1,39 @@
 import React, {useContext, useEffect, useState} from "react";
 import {useRouter} from "next/router";
 import styled from "styled-components";
-import Link from "next/link";
 
 import {DataContext} from "../../context/dataProvider";
 import {ErrorComponent} from "../../components/errorComponent";
 import {Episode} from "../../models/episode";
+import {CharacterLink} from "../../components/characterLinkComponent";
 
 type EpisodeProps = {
     episode: Episode
-}
+};
 
 const EpisodeWrapper = styled.div<EpisodeProps>`
     display: grid;
     justify-items: center;
     
-    .character {
+    .episode {
         width: 70%;
-        box-shadow: var(--shadow);    
+        padding: 20px;
+        
+        box-shadow: var(--shadow);   
+        background-color: #4fe4c1;
+        
+        text-align: center;
+        
+        .about {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-around;
+          
+          div {
+            display: flex;
+            flex-direction: column;
+          }
+        }
     }
 `;
 
@@ -39,29 +55,34 @@ export default () => {
                 data.state.error && <ErrorComponent error={data.state.error}/>
             }
             {
-                episode && <div className="episode">
-                    { episode.title }
+                episode &&
+                <div className="episode">
+                    <h2>{episode.id}: {episode.title}</h2>
+                    <h3>Directed by: {episode.directedBy}</h3>
+                    <div className="about">
+                        {
+                            episode.places.length !== 0 &&
+                            <div>
+                                <h4>Places: </h4>
+                                {episode.places.map(place => <span key={place}>{place}</span>)}
+                            </div>
+                        }
+                        {
+                            episode.deaths.length !== 0 &&
+                            <div>
+                                <h4>Deaths: </h4>
+                                {
+                                    episode.deaths.map(character =>
+                                        <CharacterLink name={character.name} key={character.name}>
+                                            <span>{character.name}</span>
+                                        </CharacterLink>
+                                    )
+                                }
+                            </div>
+                        }
+                    </div>
                 </div>
             }
         </EpisodeWrapper>
     );
 }
-
-const StyledWrapper = styled.div`
-  a {
-    color: inherit;
-    text-decoration: none;
-  }
-`;
-
-export const EpisodeLink = ({children, title}) => {
-    return (
-        <StyledWrapper>
-            <Link href="/episode/[title]" as={`/episode/${title}`}>
-                <a>
-                    {children}
-                </a>
-            </Link>
-        </StyledWrapper>
-    )
-};

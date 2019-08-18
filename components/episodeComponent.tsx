@@ -1,7 +1,7 @@
 import React, {FunctionComponent} from "react";
 
 import {Episode} from "../models/episode";
-import {EpisodeLink} from "../pages/episode/[title]";
+import {EpisodeLink} from "./episodeLinkComponents";
 
 type EpisodeComponentProps = {
     episode: Episode

@@ -12,6 +12,7 @@ type SeasonComponentProps = {
 
 const StyledWrapper = styled.div`
   padding-bottom: 20px;
+  width: 300px;
 `;
 
 export const SeasonComponent: FunctionComponent<SeasonComponentProps> = ({season, episodes, filter}) => {

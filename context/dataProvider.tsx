@@ -6,14 +6,21 @@ import {Character} from "../models/character";
 import {Episode} from "../models/episode";
 
 type Action = {
-    type: Actions;
-    payload?: any;
-}
+        type: Actions.doneLoading,
+        payload: {
+            charactersObject: Characters,
+            episodesObject: Episodes,
+        },
+    } | {
+        type: Actions.setError,
+        payload: Error,
+    } | {
+        type: Actions.moreCharacters
+};
 
 enum Actions {
-    setCharacters,
+    doneLoading,
     moreCharacters,
-    setEpisodes,
     setError,
 }
 
@@ -40,20 +47,21 @@ const initialState: State = {
 
 const reducer = (state: State, action: Action): State => {
     switch (action.type) {
-        case Actions.setCharacters:
+        case Actions.doneLoading:
+            action.payload.episodesObject.connectCharacters(action.payload.charactersObject);
+
             return {
                 ...state,
-                charactersObject: action.payload,
-            };
-        case Actions.setEpisodes:
-            return {
-                ...state,
-                episodesObject: action.payload,
+                charactersObject: action.payload.charactersObject,
+                episodesObject: action.payload.episodesObject,
             };
         case Actions.moreCharacters:
             return {
                 ...state,
-                characters: [...state.characters, ...state.charactersObject.loadMoreCharacters.next().value],
+                characters: [
+                    ...state.characters,
+                    ...state.charactersObject.loadMoreCharacters.next().value
+                ],
             };
         case Actions.setError:
             return {
@@ -61,7 +69,7 @@ const reducer = (state: State, action: Action): State => {
                 error: action.payload,
             };
         default:
-            throw new Error('Non action');
+            return state;
     }
 };
 
@@ -72,18 +80,14 @@ const DataProvider = ({ children }) => {
 
     useEffect(() => {
         const charactersObject = new Characters();
+        const episodesObject = new Episodes();
 
-        charactersObject.load()
-            .then(() => {
-                dispatch({type: Actions.setCharacters, payload: charactersObject});
-
-                const episodesObject = new Episodes();
-
-                episodesObject.load(charactersObject).then(() => {
-                    dispatch({type: Actions.setEpisodes, payload: episodesObject})
-                });
-            })
-            .catch(error => dispatch({type: Actions.setError, payload: error}))
+        Promise.all([
+            charactersObject.load(),
+            episodesObject.load(),
+        ]).then(() => {
+            dispatch({type: Actions.doneLoading, payload: {charactersObject, episodesObject}});
+        }).catch(error => dispatch({type: Actions.setError, payload: error}))
     }, []);
 
     return (

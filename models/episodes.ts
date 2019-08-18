@@ -9,7 +9,7 @@ export class Episodes {
     allEpisodes: Episode[] = [];
     groupedBySeason: seasonGroupingType = {};
 
-    public async load(characters: Characters): Promise<void> {
+    public async load(): Promise<void> {
         const data: AllEpisodesResponse = await fetch(BASE_URL + ENDPOINTS.allEpisodes)
             .then(response => {
                 return response.json()
@@ -18,12 +18,17 @@ export class Episodes {
         this.allEpisodes = data.map(Episode.reduce).sort((a, b) => {
             return a.season * 100 + a.episode -  b.season * 100 + b.episode;
         });
+
+    }
+
+    public connectCharacters(characters: Characters) {
         this.allEpisodes.forEach(item => {
             if (!(item.season in this.groupedBySeason)) {
                 this.groupedBySeason[item.season] = [];
             }
 
             item.characters = characters.getCharacters(item.characterNames);
+            item.deaths = characters.getCharacters(item.deathNames);
             this.groupedBySeason[item.season].unshift(item);
         });
     }
