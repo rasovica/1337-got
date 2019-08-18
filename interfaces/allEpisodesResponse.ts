@@ -1,14 +1,9 @@
 export interface EpisodeStub {
     characters: string[];
-    name: string;
+    places: string[];
+    title: string;
     season: number;
-    nr: number;
-    totalNr: number;
-    director: string;
-    airDate: string;
+    episode: number;
 }
 
-export interface AllEpisodesResponse {
-    message: string;
-    data: EpisodeStub[];
-}
+export type AllEpisodesResponse = EpisodeStub[];

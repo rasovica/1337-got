@@ -82,14 +82,22 @@ export const CharacterComponent: React.FunctionComponent<CharacterProps> = ({cha
         <CharacterCard character={character}>
             { character.image && <div className="image" style={{backgroundImage: `url(${character.image}`}}/> }
             <div className={character.image ? 'card' : 'card no-img'}>
-                <h3 className="name">{ character.name}</h3>
+                <CharacterLink name={character.name}>
+                    <h3 className="name">{character.name}</h3>
+                </CharacterLink>
                 { character.house && <span className="house">{character.house}</span> }
             </div>
             { character.siblings.length > 0 &&
                 <div className={"siblings"}>
                     <h3>Siblings:</h3>
                     <ul>
-                        { character.siblings.map(sibling => <CharacterLink key={sibling.name} name={sibling.name}/>)}
+                        { character.siblings.map(sibling =>
+                            <li>
+                                <CharacterLink key={sibling.name} name={sibling.name}>
+                                    { sibling.name }
+                                </CharacterLink>
+                            </li>
+                        )}
                     </ul>
                 </div>
             }

@@ -17,14 +17,16 @@ export class Episodes {
                 return response.json()
             });
 
-        this.allEpisodes = data.data.map(Episode.reduce).sort((a, b) => a.totalNr - b.totalNr);
+        this.allEpisodes = data.map(Episode.reduce).sort((a, b) => {
+            return a.season * 100 + a.episode -  b.season * 100 + b.episode;
+        });
         this.allEpisodes.forEach(item => {
             if (!(item.season in this.groupedBySeason)) {
                 this.groupedBySeason[item.season] = [];
             }
 
-            item.characters = characters.getCharacters(item.charactersNames);
-            this.groupedBySeason[item.season].push(item);
+            item.characters = characters.getCharacters(item.characterNames);
+            this.groupedBySeason[item.season].unshift(item);
         });
     }
 }

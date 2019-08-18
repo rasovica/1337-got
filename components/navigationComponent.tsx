@@ -20,6 +20,10 @@ const StyledWrapper = styled.div`
     font-weight: 700;
     font-size: 18px;
     
+    :hover {
+      border-bottom: 1px solid black;
+    }
+    
     &.active {
       border-bottom: 1px solid black;
     }
@@ -28,6 +32,7 @@ const StyledWrapper = styled.div`
 
 export const NavigationComponent = () => {
     const router = useRouter();
+    const isSubPage = router.route !== '/' && router.route !== '/episodes';
 
     return (
         <div>
@@ -38,6 +43,7 @@ export const NavigationComponent = () => {
                 <Link href="/episodes">
                     <a className={router.route === '/episodes' && 'active'}>Episodes</a>
                 </Link>
+                { isSubPage && <a href="#" onClick={router.back}>Back</a> }
             </StyledWrapper>
         </div>
     )

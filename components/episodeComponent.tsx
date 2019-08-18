@@ -9,7 +9,7 @@ type EpisodeComponentProps = {
 export const EpisodeComponent = ({episode}: EpisodeComponentProps) => {
     return (
         <div>
-            { episode.name }
+            { episode.title }
         </div>
     )
 };

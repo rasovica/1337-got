@@ -3,10 +3,10 @@ import React from 'react';
 import styled, {createGlobalStyle} from "styled-components";
 
 import {DataProvider} from "../utils/dataProvider";
-import {NavigationComponent} from "../components/navigationComponents";
+import {NavigationComponent} from "../components/navigationComponent";
 
 const GlobalStyle = createGlobalStyle`
-    @import url('https://fonts.googleapis.com/css?family=Raleway:300&display=optional');
+    @import url('https://fonts.googleapis.com/css?family=Raleway:300&display=swap');
     
     :root {
       --green: #4fe4c1;

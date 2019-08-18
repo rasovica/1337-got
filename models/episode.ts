@@ -2,23 +2,22 @@ import {Character} from "./character";
 import {EpisodeStub} from "../interfaces/allEpisodesResponse";
 
 export class Episode {
-    charactersNames: string[] = [];
-    characters: Character[] = [];
-    name: string;
+    characterNames: string[];
+    places: string[];
+    title: string;
     season: number;
-    nr: number;
-    totalNr: number;
-    director: string;
-    airDate: string;
+    episode: number;
+    id: string;
+
+    characters: Character[] = [];
 
     constructor(episode: EpisodeStub){
-        this.name = episode.name;
+        this.places = episode.places;
+        this.characterNames = episode.characters;
+        this.title = episode.title;
         this.season = episode.season;
-        this.nr = episode.nr;
-        this.director = episode.director;
-        this.airDate = episode.airDate;
-        this.charactersNames = episode.characters;
-        this.totalNr = episode.totalNr;
+        this.episode = episode.episode;
+        this.id = `S${episode.season}E${episode.episode}`;
     }
 
     public static reduce(episode: EpisodeStub): Episode {

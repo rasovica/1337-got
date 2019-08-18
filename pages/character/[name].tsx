@@ -6,20 +6,22 @@ import {useRouter} from "next/router";
 import {Character} from "../../models/character";
 import {ErrorComponent} from "../../components/errorComponent";
 
-const StyledLi = styled.li`
+const StyledWrapper = styled.div`
   a {
     color: inherit;
     text-decoration: none;
   }
 `;
 
-export const CharacterLink = ({name}) => {
+export const CharacterLink = ({children, name}) => {
     return (
-        <StyledLi>
+        <StyledWrapper>
             <Link href="/character/[name]" as={`/character/${name}`}>
-                <a>{name}</a>
+                <a>
+                    {children}
+                </a>
             </Link>
-        </StyledLi>
+        </StyledWrapper>
     )
 };
 
