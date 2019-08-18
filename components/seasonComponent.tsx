@@ -29,7 +29,7 @@ export const SeasonComponent = ({season, episodes, filter}: SeasonComponentProps
         filteredEpisodes.length > 0 && <StyledWrapper>
             <h3>Season { season }</h3>
             <div>
-                { filteredEpisodes.map(episode => <EpisodeComponent episode={episode}/>) }
+                { filteredEpisodes.map(episode => <EpisodeComponent key={episode.id} episode={episode}/>) }
             </div>
         </StyledWrapper>
     )

@@ -38,10 +38,10 @@ export const NavigationComponent = () => {
         <div>
             <StyledWrapper>
                 <Link href="/">
-                    <a className={router.route === '/' && 'active'}>Characters</a>
+                    <a className={router.route === '/' ? 'active' : undefined}>Characters</a>
                 </Link>
                 <Link href="/episodes">
-                    <a className={router.route === '/episodes' && 'active'}>Episodes</a>
+                    <a className={router.route === '/episodes' ? 'active' : undefined}>Episodes</a>
                 </Link>
                 { isSubPage && <a href="#" onClick={router.back}>Back</a> }
             </StyledWrapper>

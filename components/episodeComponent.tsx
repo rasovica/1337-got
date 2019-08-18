@@ -1,6 +1,7 @@
 import React from "react";
 
 import {Episode} from "../models/episode";
+import {EpisodeLink} from "../pages/episode/[title]";
 
 type EpisodeComponentProps = {
     episode: Episode
@@ -8,8 +9,10 @@ type EpisodeComponentProps = {
 
 export const EpisodeComponent = ({episode}: EpisodeComponentProps) => {
     return (
-        <div>
-            { episode.title }
-        </div>
+        <EpisodeLink title={episode.title}>
+            <div>
+                { episode.title }
+            </div>
+        </EpisodeLink>
     )
 };

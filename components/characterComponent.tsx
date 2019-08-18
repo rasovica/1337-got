@@ -92,8 +92,8 @@ export const CharacterComponent: React.FunctionComponent<CharacterProps> = ({cha
                     <h3>Siblings:</h3>
                     <ul>
                         { character.siblings.map(sibling =>
-                            <li>
-                                <CharacterLink key={sibling.name} name={sibling.name}>
+                            <li key={sibling.name} >
+                                <CharacterLink name={sibling.name}>
                                     { sibling.name }
                                 </CharacterLink>
                             </li>

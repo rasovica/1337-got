@@ -1,49 +1,51 @@
 import React, {useContext, useEffect, useState} from "react";
-import Link from "next/link";
-import styled from "styled-components";
-import {DataContext} from "../../utils/dataProvider";
 import {useRouter} from "next/router";
-import {Character} from "../../models/character";
-import {ErrorComponent} from "../../components/errorComponent";
+import styled from "styled-components";
+import Link from "next/link";
 
-type CharacterProps = {
-    character: Character
+import {DataContext} from "../../utils/dataProvider";
+import {ErrorComponent} from "../../components/errorComponent";
+import {Episode} from "../../models/episode";
+
+type EpisodeProps = {
+    episode: Episode
 }
 
-const CharacterWrapper = styled.div<CharacterProps>`
+const EpisodeWrapper = styled.div<EpisodeProps>`
     display: grid;
     justify-items: center;
     
     .character {
         width: 70%;
-        background-color: ${props => props.character && props.character.alive ? 'var(--green)' :  'var(--red)'};
         box-shadow: var(--shadow);    
     }
 `;
 
 export default () => {
-    const [character, setCharacter] = useState(null);
+    const [episode, setEpisode] = useState(null);
     const router = useRouter();
     const data = useContext(DataContext);
-    const name = router.query.name as string;
+    const title = router.query.title as string;
 
     useEffect(() => {
-        if (data.charactersObject) {
-            setCharacter(data.charactersObject.getCharacter(name));
+        if (data.episodesObject) {
+            setEpisode(data.episodesObject.getEpisode(title));
         }
-    }, [data.charactersObject]);
+    }, [data.episodesObject]);
+
+    console.log(episode);
 
     return (
-        <CharacterWrapper character={character}>
+        <EpisodeWrapper episode={episode}>
             {
                 data.error && <ErrorComponent error={data.error}/>
             }
             {
-                character && <div className="character">
-                    { character.name }
+                episode && <div className="episode">
+                    { episode.title }
                 </div>
             }
-        </CharacterWrapper>
+        </EpisodeWrapper>
     );
 }
 
@@ -54,10 +56,10 @@ const StyledWrapper = styled.div`
   }
 `;
 
-export const CharacterLink = ({children, name}) => {
+export const EpisodeLink = ({children, title}) => {
     return (
         <StyledWrapper>
-            <Link href="/character/[name]" as={`/character/${name}`}>
+            <Link href="/episode/[title]" as={`/episode/${title}`}>
                 <a>
                     {children}
                 </a>

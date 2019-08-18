@@ -53,14 +53,18 @@ export default () => {
     return (
         <StyledWrapper>
             <div className="content">
-                <input value={filter} onChange={event => setFilter(event.target.value)} type="text" className="search" placeholder="Search (title, S01E01)..."/>
+                <input value={filter} onChange={event => setFilter(event.target.value)} type="text" className="search"
+                       placeholder="Search (title, S1E1)..."/>
                 <div className="scrollable">
-                    { data.error && <ErrorComponent error={data.error}/>}
-                    { !data.error && data.characters.length === 0 && <LoadingComponent/>}
-                    { data.episodesObject && Object.keys(data.episodesObject.groupedBySeason)
-                        .map(season => <SeasonComponent season={season}
-                                                        episodes={data.episodesObject.groupedBySeason[season]}
-                                                        filter={filter}/>)
+                    {data.error && <ErrorComponent error={data.error}/>}
+                    {!data.error && data.characters.length === 0 && <LoadingComponent/>}
+                    {data.episodesObject && Object.keys(data.episodesObject.groupedBySeason)
+                        .map(season => <SeasonComponent
+                            key={season}
+                            season={season}
+                            episodes={data.episodesObject.groupedBySeason[season]}
+                            filter={filter}/>
+                        )
                     }
                 </div>
             </div>

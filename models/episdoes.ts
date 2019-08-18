@@ -29,4 +29,8 @@ export class Episodes {
             this.groupedBySeason[item.season].unshift(item);
         });
     }
+
+    public getEpisode = (title: string): Episode | undefined => {
+        return this.allEpisodes.find(item => item.title === title);
+    };
 }
