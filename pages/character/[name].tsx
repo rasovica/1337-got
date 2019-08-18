@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from "react";
 import Link from "next/link";
 import styled from "styled-components";
-import {DataContext} from "../../utils/dataProvider";
+import {DataContext} from "../../context/dataProvider";
 import {useRouter} from "next/router";
 import {Character} from "../../models/character";
 import {ErrorComponent} from "../../components/errorComponent";
@@ -28,15 +28,15 @@ export default () => {
     const name = router.query.name as string;
 
     useEffect(() => {
-        if (data.charactersObject) {
-            setCharacter(data.charactersObject.getCharacter(name));
+        if (data.state.charactersObject) {
+            setCharacter(data.state.charactersObject.getCharacter(name));
         }
-    }, [data.charactersObject]);
+    }, [data.state.charactersObject]);
 
     return (
         <CharacterWrapper character={character}>
             {
-                data.error && <ErrorComponent error={data.error}/>
+                data.state.error && <ErrorComponent error={data.state.error}/>
             }
             {
                 character && <div className="character">

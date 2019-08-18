@@ -2,7 +2,7 @@ import fetch from 'isomorphic-unfetch';
 
 import {AllCharactersResponse} from "../interfaces/allCharactersResponse";
 import {Character} from "./character";
-import {BASE_URL, ENDPOINT_ENUM} from "../constants";
+import {BASE_URL, ENDPOINTS} from "../constants";
 
 type CharacterLookup = {
     [name: string]: Character | undefined;
@@ -12,8 +12,10 @@ export class Characters {
     private allCharacters: Character[] = [];
     private characterLookup: CharacterLookup = {};
 
+    public loadMoreCharacters?: IterableIterator<Character[]> = null;
+
     public async load(): Promise<void> {
-        const data: AllCharactersResponse = await fetch(BASE_URL + ENDPOINT_ENUM.allCharacters)
+        const data: AllCharactersResponse = await fetch(BASE_URL + ENDPOINTS.allCharacters)
                         .then(response => {
                             return response.json()
                         });
@@ -25,33 +27,21 @@ export class Characters {
             if(lowerA < lowerB) { return -1; }
             if(lowerA > lowerB) { return 1; }
             return 0;
-        }).map(Character.reduce);
+        }).map(character => Character.reduce(character));
 
         this.createSiblings();
+        this.loadMoreCharacters = this.paginator();
     }
 
-    public paginator(size = 10) {
-        let page = 0;
-
-        return {
-            next: () => {
-                const data = this.allCharacters.slice(page * size, (page + 1) * size);
-                page += 1;
-
-                return {data, done: data.length === 0}
-            }
-        };
-    }
-
-    public getCharacter = (name: string): Character | undefined => {
+    public getCharacter(name: string): Character | undefined {
         return this.characterLookup[name];
-    };
+    }
 
-    public getCharacters = (characters: string[]): Character[] => {
+    public getCharacters(characters: string[]): Character[] {
         return characters
-            .map(this.getCharacter)
+            .map(characterName => this.getCharacter(characterName))
             .filter(item => item !== undefined);
-    };
+    }
 
     private createSiblings() {
         this.allCharacters.forEach((character: Character) => {
@@ -69,5 +59,17 @@ export class Characters {
                 }
             });
         });
+    }
+
+    private *paginator(size = 10) {
+        let page = 0;
+        let data = [];
+
+        do {
+            data = this.allCharacters.slice(page * size, (page + 1) * size);
+            page += 1;
+
+            yield data;
+        } while (data.length > 0);
     }
 }

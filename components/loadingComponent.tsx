@@ -1,4 +1,4 @@
-import React from "react";
+import React, {FunctionComponent} from "react";
 import styled from "styled-components";
 
 const StyledWrapper = styled.div`
@@ -10,7 +10,9 @@ const StyledWrapper = styled.div`
   box-shadow: var(--shadow);    
 `;
 
-export const LoadingComponent = () => {
+export const LoadingComponent: FunctionComponent = () => {
 
-    return <StyledWrapper>Loading...</StyledWrapper>
+    return (
+        <StyledWrapper>Loading...</StyledWrapper>
+    );
 };

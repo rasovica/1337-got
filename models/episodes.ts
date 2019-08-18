@@ -1,18 +1,16 @@
 import {Episode} from "./episode";
-import {BASE_URL, ENDPOINT_ENUM} from "../constants";
+import {BASE_URL, ENDPOINTS} from "../constants";
 import {AllEpisodesResponse} from "../interfaces/allEpisodesResponse";
 import {Characters} from "./characters";
 
-type seasonGroupingType = {
-    [season: number]: Episode[];
-}
+type seasonGroupingType = Record<number, Episode[]>;
 
 export class Episodes {
     allEpisodes: Episode[] = [];
     groupedBySeason: seasonGroupingType = {};
 
     public async load(characters: Characters): Promise<void> {
-        const data: AllEpisodesResponse = await fetch(BASE_URL + ENDPOINT_ENUM.allEpisodes)
+        const data: AllEpisodesResponse = await fetch(BASE_URL + ENDPOINTS.allEpisodes)
             .then(response => {
                 return response.json()
             });

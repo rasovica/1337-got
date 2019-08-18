@@ -1,11 +1,12 @@
-import React from "react";
+import React, {FunctionComponent} from "react";
 import styled from "styled-components";
+
 import {Character} from "../models/character";
 import {CharacterLink} from "../pages/character/[name]";
 
 type CharacterProps = {
     character: Character
-}
+};
 
 // Design stolen from: https://dribbble.com/shots/2378729-Speaker-Profile
 const CharacterCard = styled.div<CharacterProps>`
@@ -76,7 +77,7 @@ const CharacterCard = styled.div<CharacterProps>`
     }
 `;
 
-export const CharacterComponent: React.FunctionComponent<CharacterProps> = ({character}) => {
+export const CharacterComponent: FunctionComponent<CharacterProps> = ({character}) => {
 
     return (
         <CharacterCard character={character}>
@@ -88,7 +89,7 @@ export const CharacterComponent: React.FunctionComponent<CharacterProps> = ({cha
                 { character.house && <span className="house">{character.house}</span> }
             </div>
             { character.siblings.length > 0 &&
-                <div className={"siblings"}>
+                <div className="siblings">
                     <h3>Siblings:</h3>
                     <ul>
                         { character.siblings.map(sibling =>
@@ -102,5 +103,5 @@ export const CharacterComponent: React.FunctionComponent<CharacterProps> = ({cha
                 </div>
             }
         </CharacterCard>
-    )
+    );
 };

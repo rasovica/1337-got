@@ -3,7 +3,7 @@ import {useRouter} from "next/router";
 import styled from "styled-components";
 import Link from "next/link";
 
-import {DataContext} from "../../utils/dataProvider";
+import {DataContext} from "../../context/dataProvider";
 import {ErrorComponent} from "../../components/errorComponent";
 import {Episode} from "../../models/episode";
 
@@ -22,23 +22,21 @@ const EpisodeWrapper = styled.div<EpisodeProps>`
 `;
 
 export default () => {
-    const [episode, setEpisode] = useState(null);
+    const [episode, setEpisode] = useState<Episode>(null);
     const router = useRouter();
     const data = useContext(DataContext);
     const title = router.query.title as string;
 
     useEffect(() => {
-        if (data.episodesObject) {
-            setEpisode(data.episodesObject.getEpisode(title));
+        if (data.state.episodesObject) {
+            setEpisode(data.state.episodesObject.getEpisode(title));
         }
-    }, [data.episodesObject]);
-
-    console.log(episode);
+    }, [data.state.episodesObject]);
 
     return (
         <EpisodeWrapper episode={episode}>
             {
-                data.error && <ErrorComponent error={data.error}/>
+                data.state.error && <ErrorComponent error={data.state.error}/>
             }
             {
                 episode && <div className="episode">

@@ -2,7 +2,7 @@ import App, {Container} from 'next/app';
 import React from 'react';
 import styled, {createGlobalStyle} from "styled-components";
 
-import {DataProvider} from "../utils/dataProvider";
+import {DataProvider} from "../context/dataProvider";
 import {NavigationComponent} from "../components/navigationComponent";
 
 const GlobalStyle = createGlobalStyle`

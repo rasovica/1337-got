@@ -1,9 +1,9 @@
-import React from "react";
+import React, {FunctionComponent, useEffect} from "react";
 import styled from "styled-components";
 
 type ErrorComponentProps = {
     error: Error,
-}
+};
 
 const StyledWrapper = styled.div`
   padding: 20px;
@@ -14,8 +14,12 @@ const StyledWrapper = styled.div`
   box-shadow: var(--shadow);    
 `;
 
-export const ErrorComponent = ({error}: ErrorComponentProps) => {
-    console.error(error);
+export const ErrorComponent: FunctionComponent<ErrorComponentProps> = ({error}) => {
+    useEffect(() => {
+        console.error(error);
+    }, []);
 
-    return <StyledWrapper>Error! {error.message}</StyledWrapper>
+    return (
+        <StyledWrapper>Error! {error.message}</StyledWrapper>
+    );
 };

@@ -1,7 +1,8 @@
-import React, {useContext} from 'react';
-import {DataContext} from "../utils/dataProvider";
-import {CharacterComponent} from "../components/characterComponent";
+import React, {useContext, useEffect} from 'react';
 import styled from "styled-components";
+
+import {Actions, DataContext} from "../context/dataProvider";
+import {CharacterComponent} from "../components/characterComponent";
 import {LoadingComponent} from "../components/loadingComponent";
 import {ErrorComponent} from "../components/errorComponent";
 
@@ -25,15 +26,21 @@ export default () => {
 
     const scrollHandler = (event) => {
         if (event.target.scrollTop + event.target.clientHeight + 100 >= event.target.scrollHeight) {
-            data.loadMoreCharacters();
+            data.dispatch({type: Actions.moreCharacters});
         }
     };
 
+    useEffect(() => {
+        if (data.state.charactersObject) {
+            data.dispatch({type: Actions.moreCharacters});
+        }
+    }, [data.state.charactersObject]);
+
     return (
         <StyledIndex onScroll={(e) => scrollHandler(e)}>
-            { data.error && <ErrorComponent error={data.error}/>}
-            { !data.error && data.characters.length === 0 && <LoadingComponent/>}
-            { data.characters.map(character => <CharacterComponent character={character} key={character.name}/>) }
+            { data.state.error && <ErrorComponent error={data.state.error}/>}
+            { !data.state.charactersObject && <LoadingComponent/>}
+            { data.state.characters.map(character => <CharacterComponent character={character} key={character.name}/>) }
         </StyledIndex>
     )
 }

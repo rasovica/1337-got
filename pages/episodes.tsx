@@ -1,6 +1,6 @@
 import React, {useContext, useState} from "react";
 import styled from "styled-components";
-import {DataContext} from "../utils/dataProvider";
+import {DataContext} from "../context/dataProvider";
 import {ErrorComponent} from "../components/errorComponent";
 import {LoadingComponent} from "../components/loadingComponent";
 import {SeasonComponent} from "../components/seasonComponent";
@@ -48,7 +48,7 @@ const StyledWrapper = styled.div`
 
 export default () => {
     const data = useContext(DataContext);
-    const [filter, setFilter] = useState('');
+    const [filter, setFilter] = useState<string>('');
 
     return (
         <StyledWrapper>
@@ -56,13 +56,13 @@ export default () => {
                 <input value={filter} onChange={event => setFilter(event.target.value)} type="text" className="search"
                        placeholder="Search (title, S1E1)..."/>
                 <div className="scrollable">
-                    {data.error && <ErrorComponent error={data.error}/>}
-                    {!data.error && data.characters.length === 0 && <LoadingComponent/>}
-                    {data.episodesObject && Object.keys(data.episodesObject.groupedBySeason)
+                    {data.state.error && <ErrorComponent error={data.state.error}/>}
+                    {!data.state.episodesObject && <LoadingComponent/>}
+                    {data.state.episodesObject && Object.keys(data.state.episodesObject.groupedBySeason)
                         .map(season => <SeasonComponent
                             key={season}
                             season={season}
-                            episodes={data.episodesObject.groupedBySeason[season]}
+                            episodes={data.state.episodesObject.groupedBySeason[season]}
                             filter={filter}/>
                         )
                     }
