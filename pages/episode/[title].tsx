@@ -83,6 +83,9 @@ export default () => {
                     </div>
                 </div>
             }
+            {
+                data.state.episodesObject && !episode && <ErrorComponent error={new Error("Can't find episode")}/>
+            }
         </EpisodeWrapper>
     );
 }

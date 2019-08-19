@@ -7,6 +7,7 @@ type ErrorComponentProps = {
 
 const StyledWrapper = styled.div`
   padding: 20px;
+  margin-bottom: 20px;
   grid-row: 1;
   grid-column: 1 / -1; 
   

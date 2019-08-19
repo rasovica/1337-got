@@ -95,6 +95,9 @@ export default () => {
                     </div>
                 </div>
             }
+            {
+                data.state.charactersObject && !character && <ErrorComponent error={new Error("Can't find character")}/>
+            }
         </CharacterWrapper>
     );
 }
