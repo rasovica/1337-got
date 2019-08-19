@@ -17,7 +17,8 @@ export class Character {
         this.siblingsNames = siblings;
         this.alive = alive;
         this.culture = culture;
-        this.religion = religion;
+        // Api returns empty strings as religions sometimes
+        this.religion = religion.filter(religion => religion.length > 0);
     }
 
     public static reduce(chr: CharacterStub) {
