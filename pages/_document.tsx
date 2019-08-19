@@ -18,7 +18,7 @@ export default class MyDocument extends Document<MyDocumentProps> {
         const styleTags = sheet.getStyleElement();
 
         return { ...initialProps, styleTags };
-    }
+    };
 
     render() {
         return (
@@ -31,6 +31,6 @@ export default class MyDocument extends Document<MyDocumentProps> {
                 <NextScript />
             </body>
             </html>
-        )
+        );
     };
 }

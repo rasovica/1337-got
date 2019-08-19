@@ -18,7 +18,6 @@ export class Episodes {
         this.allEpisodes = data.map(Episode.reduce).sort((a, b) => {
             return a.season * 100 + a.episode -  b.season * 100 + b.episode;
         });
-
     }
 
     public connectCharacters(characters: Characters) {

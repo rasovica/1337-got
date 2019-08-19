@@ -7,9 +7,7 @@ to make sure I do the core requirements first.
 I didn't write any comments as I think most of the code is self explanatory.
 
 There is definitely a lot more that could have been done if I had more time. There is currently no SEO,
-the ssr just shows `Loading` component.
-
-As I am not frontend first, some of css is a bit borkend and I am sure with time I could make it better.
+the ssr just shows `Loading` component. As I am not frontend first, some of css is a bit borkend and I am sure with time I could make it better.
 
 I also didn't show IDs as it just felt wrong to display them on frontend. I could have it would have been 3 lines
 of code, but it just felt wrong. Instead I made custom ids for episodes (S1E1). The
